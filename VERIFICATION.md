@@ -41,3 +41,11 @@ Canvas: 450×600
 
 ## Known Issues
 - None
+
+## Bugs Fixed
+| Date | Bug | Fix |
+|------|-----|-----|
+| 2026-05-14 | Double-hit in same frame: bullet + enemy ram costs 2 lives | Added wasHit flag; ramming check skipped after bullet hit |
+| 2026-05-14 | Pending spawn timeouts leaked across restarts | Track timeout IDs in pendingSpawns[]; clear in restartGame() |
+| 2026-05-14 | Harness: case-sensitive grep missed "object pool"/"GAME OVER" | Changed to grep -iq with correct string literals |
+| 2026-05-14 | Harness: JS syntax check failed on extensionless temp file | Added .js extension to mktemp filename |
