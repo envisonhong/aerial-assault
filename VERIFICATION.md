@@ -1,31 +1,43 @@
 # VERIFICATION.md — Aerial Assault
 
-Status: PENDING INITIAL VERIFICATION
+Status: PASS
 
 ## Game Overview
 - Genre: Vertical Scrolling Shoot-'Em-Up
-- Tech: Single-file HTML5 Canvas, vanilla JavaScript
+- Tech: Single-file HTML5 Canvas, vanilla JavaScript (zero dependencies)
 - Resolution: 450x600 (3:4 vertical arcade aspect ratio)
 - Rendering: Procedural Canvas 2D (no external assets)
 
 ## Verification Criteria
 
-- [ ] Build/File Integrity — index.html exists, non-trivial, valid JS syntax
-- [ ] Dev Server Smoke — serves HTML, 200 response, canvas present
-- [ ] Game Architecture — object pooling, AABB, fixed-step loop, mouse control
-- [ ] Core Mechanics — auto-fire, enemy waves, lives, score, difficulty scaling
-- [ ] Game Feel — invulnerability blink, particles, medal drops, game over overlay
-- [ ] Visual Quality — procedural player jet, enemies, scrolling background, HUD
-- [ ] Restart Flow — INSERT COIN click resets all state
+- [x] Build/File Integrity — index.html 28KB, valid JS syntax
+- [x] Dev Server Smoke — serves HTML, 200 response, canvas present
+- [x] Game Architecture — object pooling (200/300/60/500 caps), AABB, fixed-step loop, mouse control
+- [x] Core Mechanics — auto-fire (2 lasers/120ms), enemy waves (4 formations), lives, score, difficulty scaling
+- [x] Game Feel — invulnerability blink (2s), particles (500 pool), medal drops, game over overlay
+- [x] Visual Quality — procedural player jet, scouts/bombers/heavies, scrolling terrain, HUD
+- [x] Restart Flow — INSERT COIN click resets all state (verified via browser console)
+- [x] Browser Verification — Canvas renders, 0 JS errors, game loop active
 
 ## Test Suite
-- `tests/harness.sh` — full verification (file check + server smoke + E2E)
-- `tests/e2e/verify-game.cjs` — page fetch + static analysis
+- `tests/harness.sh` — full verification (file check + JS syntax + server smoke + E2E)
+- `tests/e2e/verify-game.cjs` — 21 static checks
 
 ## Evidence
 | Date | Verdict | Evidence |
 |------|---------|----------|
-| - | - | - |
+| 2026-05-14 07:37 | PASS (14/14) | tests/evidence/harness-20260514_073724.log |
+| 2026-05-14 07:38 | PASS (browser) | Browser console: 0 JS errors, canvas 450x600, 17 enemies active, game over + restart verified |
+
+## Browser Console Verification
+```
+Score: 0→2100 (accumulating during idle)
+Lives: 3
+Game State: playing → gameover (on playerHit) → playing (on restart)
+Object Pools: 200/300/60/500
+JS Errors: 0
+Canvas: 450×600
+```
 
 ## Known Issues
-- None yet
+- None
