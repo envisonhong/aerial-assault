@@ -1,0 +1,59 @@
+[07:53:53] ============================================================
+[07:53:53] AERIAL ASSAULT — Harness Run 20260514_075353
+[07:53:53] ============================================================
+[07:53:53] 
+[07:53:53] GATE 1: File Integrity
+[07:53:53]   PASS: index.html exists
+[07:53:53]   PASS: index.html is non-trivial (28771 bytes)
+[07:53:53]   PASS: Source contains: object pool
+[07:53:53]   PASS: Source contains: AABB
+[07:53:53]   PASS: Source contains: requestAnimationFrame
+[07:53:53]   PASS: Source contains: GAME OVER
+[07:53:53]   PASS: Source contains: playerHit
+[07:53:53]   PASS: Source contains: difficultyScale
+[07:53:53]   PASS: Source contains: Canvas
+[07:53:53] 
+[07:53:53] GATE 2: JavaScript Syntax Check
+[07:53:53]   PASS: JavaScript syntax valid
+[07:53:53] 
+[07:53:53] GATE 3: Dev Server Smoke Test
+[07:53:54]   PASS: Dev server responds 200
+[07:53:54]   PASS: Served HTML is complete (28771 bytes)
+[07:53:54]   PASS: Canvas element present in served HTML
+[07:53:54] 
+[07:53:54] GATE 4: Browser E2E (via Node.js)
+E2E: Aerial Assault Verification
+Target: http://localhost:8088/index.html
+
+  PASS: HTTP 200 response
+  PASS: Page is non-empty
+  PASS: HTML5 doctype
+  PASS: Canvas element exists
+  PASS: Object pooling present
+  PASS: AABB collision
+  PASS: requestAnimationFrame loop
+  PASS: Game Over state
+  PASS: Player hit function
+  PASS: Difficulty scaling
+  PASS: Enemy spawn waves
+  PASS: Auto-fire system
+  PASS: Lives system
+  PASS: Score tracking
+  PASS: Medal drops
+  PASS: Particle system
+  PASS: Canvas 450px width
+  PASS: Canvas 600px height
+  PASS: Restart game function
+  PASS: Mouse input handling
+  PASS: Invulnerability blink
+  PASS: Canvas 2D drawing
+  PASS: Centered layout
+
+Result: 23 pass, 0 fail
+[07:53:54]   PASS: E2E verification passed
+[07:53:54] 
+[07:53:54] ============================================================
+[07:53:54] RESULTS: 14 pass, 0 fail, 14 total
+[07:53:54] VERDICT: PASS
+[07:53:54] Evidence: /home/ht/P-G/projects/aerial-assault/tests/evidence/harness-20260514_075353.log
+[07:53:54] ============================================================

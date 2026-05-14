@@ -51,6 +51,7 @@ let gameTime = 0;
 let difficultyScale = 1;
 let spawnTimer = 0;
 let scrollOffset = 0;
+let pendingSpawns = []; // track setTimeout IDs for cleanup on restart
 
 // ---- object pools ----
 // Player bullets (lasers): pool of up to 200
@@ -256,19 +257,19 @@ function spawnWave() {
       x = 50 + Math.random() * (CANVAS_W - 100);
     }
     // Stagger spawn time slightly
-    setTimeout(() => { if (gameState === 'playing') spawnEnemy(x, -30 - i * 15, 'scout'); }, i * 100);
+    pendingSpawns.push(setTimeout(() => { if (gameState === 'playing') spawnEnemy(x, -30 - i * 15, 'scout'); }, i * 100));
   }
 
   // Heavy bomber: chance increases with difficulty
   if (Math.random() < 0.25 + ds * 0.04) {
     const bx = 80 + Math.random() * (CANVAS_W - 160);
-    setTimeout(() => { if (gameState === 'playing') spawnEnemy(bx, -50, 'heavy'); }, 600);
+    pendingSpawns.push(setTimeout(() => { if (gameState === 'playing') spawnEnemy(bx, -50, 'heavy'); }, 600));
   }
 
   // Bomber wave: often behind scouts
   if (Math.random() < 0.3 + ds * 0.03) {
     const bx2 = 70 + Math.random() * (CANVAS_W - 140);
-    setTimeout(() => { if (gameState === 'playing') spawnEnemy(bx2, -40, 'bomber'); }, 300);
+    pendingSpawns.push(setTimeout(() => { if (gameState === 'playing') spawnEnemy(bx2, -40, 'bomber'); }, 300));
   }
 
   // Set next spawn time
@@ -334,6 +335,10 @@ function restartGame() {
   scrollOffset = 0;
   invulnUntil = 0;
   lastFireTime = 0;
+
+  // Clear any pending spawn timeouts from previous game
+  pendingSpawns.forEach(clearTimeout);
+  pendingSpawns = [];
 
   // Deactivate all pool objects
   for (let i = 0; i < MAX_PB; i++) pBullets[i].active = false;
@@ -950,8 +955,11 @@ function update(dt) {
     }
   }
 
-  // Collision: enemy bullets vs player
+  // Collision: enemy bullets vs player + enemy ramming
   if (invulnUntil <= gameTime) {
+    let wasHit = false;
+
+    // Enemy bullets vs player
     for (let i = 0; i < MAX_EB; i++) {
       const b = eBullets[i];
       if (!b.active) continue;
@@ -961,21 +969,24 @@ function update(dt) {
         b.active = false;
         eBulletCount--;
         playerHit();
+        wasHit = true;
         break;
       }
     }
 
-    // Collision: enemies vs player (ramming)
-    for (let i = 0; i < MAX_EN; i++) {
-      const e = enemies[i];
-      if (!e.active) continue;
-      if (aabbHit(player.x - player.hitR, player.y - player.hitR, player.hitR * 2, player.hitR * 2,
-                  e.x - e.w/2, e.y - e.h/2, e.w, e.h)) {
-        spawnParticle(e.x, e.y, '#ff6600', 15);
-        e.active = false;
-        enemyCount--;
-        playerHit();
-        break;
+    // Collision: enemies vs player (ramming) — only if not already hit this frame
+    if (!wasHit) {
+      for (let i = 0; i < MAX_EN; i++) {
+        const e = enemies[i];
+        if (!e.active) continue;
+        if (aabbHit(player.x - player.hitR, player.y - player.hitR, player.hitR * 2, player.hitR * 2,
+                    e.x - e.w/2, e.y - e.h/2, e.w, e.h)) {
+          spawnParticle(e.x, e.y, '#ff6600', 15);
+          e.active = false;
+          enemyCount--;
+          playerHit();
+          break;
+        }
       }
     }
   }
