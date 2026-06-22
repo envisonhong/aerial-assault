@@ -1,43 +1,22 @@
-<!-- gitnexus:start -->
-# GitNexus — Code Intelligence
+# Aerial Assault — Agent Harness
 
-This project is indexed by GitNexus as **aerial-assault** (53 symbols, 51 relationships, 0 execution flows). Use the GitNexus MCP tools to understand code, assess impact, and navigate safely.
+2D vertical scrolling shoot-em-up. Browser game (HTML/JS).
 
-> If any GitNexus tool warns the index is stale, run `npx gitnexus analyze` in terminal first.
+## Startup Workflow
 
-## Always Do
+1. Open index.html in browser to play
+2. Run `bash tests/harness.sh` to verify
+3. Check CLAUDE.md for coding conventions
 
-- **MUST run impact analysis before editing any symbol.** Before modifying a function, class, or method, run `gitnexus_impact({target: "symbolName", direction: "upstream"})` and report the blast radius (direct callers, affected processes, risk level) to the user.
-- **MUST run `gitnexus_detect_changes()` before committing** to verify your changes only affect expected symbols and execution flows.
-- **MUST warn the user** if impact analysis returns HIGH or CRITICAL risk before proceeding with edits.
-- When exploring unfamiliar code, use `gitnexus_query({query: "concept"})` to find execution flows instead of grepping. It returns process-grouped results ranked by relevance.
-- When you need full context on a specific symbol — callers, callees, which execution flows it participates in — use `gitnexus_context({name: "symbolName"})`.
+## Working Rules
 
-## Never Do
+- Tests before claim — run harness.sh
+- No paid APIs or external services
+- Keep single-file architecture unless complexity demands split
+- GitNexus: check impact before editing symbols
 
-- NEVER edit a function, class, or method without first running `gitnexus_impact` on it.
-- NEVER ignore HIGH or CRITICAL risk warnings from impact analysis.
-- NEVER rename symbols with find-and-replace — use `gitnexus_rename` which understands the call graph.
-- NEVER commit changes without running `gitnexus_detect_changes()` to check affected scope.
+## Definition of Done
 
-## Resources
-
-| Resource | Use for |
-|----------|---------|
-| `gitnexus://repo/aerial-assault/context` | Codebase overview, check index freshness |
-| `gitnexus://repo/aerial-assault/clusters` | All functional areas |
-| `gitnexus://repo/aerial-assault/processes` | All execution flows |
-| `gitnexus://repo/aerial-assault/process/{name}` | Step-by-step execution trace |
-
-## CLI
-
-| Task | Read this skill file |
-|------|---------------------|
-| Understand architecture / "How does X work?" | `.claude/skills/gitnexus/gitnexus-exploring/SKILL.md` |
-| Blast radius / "What breaks if I change X?" | `.claude/skills/gitnexus/gitnexus-impact-analysis/SKILL.md` |
-| Trace bugs / "Why is X failing?" | `.claude/skills/gitnexus/gitnexus-debugging/SKILL.md` |
-| Rename / extract / split / refactor | `.claude/skills/gitnexus/gitnexus-refactoring/SKILL.md` |
-| Tools, resources, schema reference | `.claude/skills/gitnexus/gitnexus-guide/SKILL.md` |
-| Index, status, clean, wiki CLI commands | `.claude/skills/gitnexus/gitnexus-cli/SKILL.md` |
-
-<!-- gitnexus:end -->
+- [ ] All tests pass (harness.sh)
+- [ ] No console errors in browser
+- [ ] Git committed

@@ -1,0 +1,14 @@
+{
+  "features": [
+    {
+      "name": "core-shmup-engine",
+      "status": "complete",
+      "description": "Vertical scrolling shooter with enemies and collision"
+    },
+    {
+      "name": "double-hit-fix",
+      "status": "complete",
+      "description": "Prevent double-hit in same frame, cleanup pending spawns"
+    }
+  ]
+}
